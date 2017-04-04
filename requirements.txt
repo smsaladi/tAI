@@ -1,0 +1,10 @@
+# calculations
+numpy
+pandas
+scipy
+# main function only
+biopython
+
+# testing
+pytest
+
