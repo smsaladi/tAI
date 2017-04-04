@@ -10,6 +10,15 @@ It should be more extensible though perhaps not faster.
 If there are codons that are composed of non-ATGCU 'bases', they will be
 silently ignored from analysis.
 
+There will be small differences in the calculation compared to the original
+codonR program (O(1e-3)).
+
+These may be the result of a mis-coding in the original data table used in the
+codonR code, which assigns 1 tRNA to `TGA` (a stop codon), which wouldn't be
+right. Based on the known tRNAs in *E. coli*, `TGA` may have been unknowingly
+swapped with `TGT` keeping it together with the other stop codons in the coding
+table.
+
 
 ## Author:
 
