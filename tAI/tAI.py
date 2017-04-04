@@ -5,6 +5,9 @@ Shyam Saladi (saladi@caltech.edu)
 January 2016
 '''
 
+# Python 2 and 3 compatibility
+from __future__ import print_function
+
 # Only used in main() to read fasta files
 # not for tAI calculation
 import argparse
