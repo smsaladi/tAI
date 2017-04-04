@@ -128,8 +128,11 @@ def calc_tAI(nucseq, ref_trna='codonR', recalc_weights=False, omit_first=True,
         nucseq = nucseq[3:]
 
     # Now, count codons:
-    codons = collections.Counter(re.findall('...', nucseq))
-    codon_count = pd.Series(codons, name='codons')
+    # codons = collections.Counter(re.findall('...', nucseq))
+    # codon_count = pd.Series(codons, name='codons')
+    codon_id, codon_count = np.unique(re.findall('...', nucseq),
+                                      return_counts=True)
+    codon_count = pd.Series(codon_count, index=codon_id, name='codons')
 
     # remove non-standard codons from analysis by joining with weights series
     df = pd.concat([ln_weights, codon_count], axis = 1).loc[ln_weights.index]
