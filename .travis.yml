@@ -32,13 +32,14 @@ matrix:
 #          language: generic
 #          env: CONDA_PY=3.5
 
-
 install:
   - source devtools/travis-ci-installcfg.sh
-  - pip install .
+  - pip install codecov pytest-cov
+  - pip install -e .
 
 script:
-  - py.test -v --color=yes --exitfirst --showlocals
+  - py.test -v --color=yes --exitfirst --showlocals --cov=tAI/ test/
+  - codecov
 
 deploy:
   provider: pypi
