@@ -25,12 +25,12 @@ matrix:
           env: CONDA_PY=2.7
         - os: linux
           env: CONDA_PY=3.5
-        - os: osx
-          language: generic
-          env: CONDA_PY=2.7
-        - os: osx
-          language: generic
-          env: CONDA_PY=3.5
+#        - os: osx
+#          language: generic
+#          env: CONDA_PY=2.7
+#        - os: osx
+#          language: generic
+#          env: CONDA_PY=3.5
 
 
 install:
