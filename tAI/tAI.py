@@ -8,12 +8,10 @@ January 2016
 # Python 2 and 3 compatibility
 from __future__ import print_function
 
-# used in tAI calculation
+import itertools
 import re
-
 from pkg_resources import resource_filename
 
-# used in tAI calculation
 import pandas as pd
 import numpy as np
 import scipy.stats.mstats
@@ -86,9 +84,12 @@ class tAI:
 
         # obtain absolute adaptiveness values (Ws)
 
-        # add zero's for stop codons since (e.g. 'TGN' may need a 'TGA' abundance)
-        trna_count = pd.concat([trna_count,
-            pd.Series(0, index=['TGA', 'TAA', 'TAG'])], axis=0)
+        # add zero's for missing codons
+        # zero out stop codons (e.g. 'TGN' may need a 'TGA' abundance)
+        for bases in itertools.product('ATGC', repeat=3):
+            codon = "".join(bases)
+            if codon not in trna_count.index or codon in ['TGA', 'TAA', 'TAG']:
+                trna_count[codon] = 0
 
         # trna file with codonR has a transposition resulting in erronous weights
         # for TGN codons
