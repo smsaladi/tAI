@@ -341,6 +341,16 @@ def main():
         help='FASTA-formatted nucleotide file of the Coding Sequences'
              '(stdin by default)')
 
+    parser.add_argument('--named_reference',
+        type=str,
+        default=None,
+        help='Use a named table enclosed with the package')
+
+    parser.add_argument('--gtRNAdb',
+        type=str,
+        default=None,
+        help='Use a .bed file from the gtRNAdb for reference tRNAs')
+
     args = parser.parse_args()
 
     if args.fna_filename == '-':
@@ -350,8 +360,17 @@ def main():
         with open(args.fna_filename, 'r+') as fh:
             seq_records = list(Bio.SeqIO.parse(fh, "fasta"))
 
-    my_tai = tAI.from_named_reference('codonR')
-    print(my_tai.calc([str(r.seq) for r in seq_records]))
+    if args.named_reference is not None and args.gtRNAdb is not None:
+        raise ValueError("Can't specify both a named_reference and gtRNAdb file")
+    elif args.gtRNAdb is not None:
+        my_tai = tAI.from_gtRNAdb(args.gtRNAdb)
+    elif args.named_reference is not None:
+        my_tai = tAI.from_named_reference(args.named_reference)
+    else:
+        my_tai = tAI.from_named_reference('lowelab')
+        print("Using E. coli tRNA counts from lowelab/GtRNAdb", file=sys.stderr)
+
+    print([my_tai.calc(str(r.seq)) for r in seq_records])
 
     return
 
