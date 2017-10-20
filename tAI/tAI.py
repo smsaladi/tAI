@@ -139,7 +139,7 @@ class tAI:
         # substitute 0-ws by geometric mean
         nonzero_weights = weights[~np.isclose(weights, 0)]
         geometric_mean = scipy.stats.mstats.gmean(nonzero_weights)
-        weights[weights == 0] = geometric_mean
+        weights[np.isclose(weights, 0)] = geometric_mean
 
         return np.log(weights)
 
