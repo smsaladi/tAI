@@ -301,7 +301,7 @@ class tAI:
         codon_count = pd.Series(codon_count, index=codon_id, name='codons')
 
         # remove non-standard codons from analysis by joining with weights series
-        df = pd.concat([self.weights, codon_count], axis=1).loc[self.weights.index]
+        df = pd.concat([self.weights, codon_count], axis=1, sort=True).loc[self.weights.index]
 
         # and now we an finally calculate tAI:
         # tai is the weighted average of the weights (weighted by the codon counts)
@@ -370,7 +370,8 @@ def main():
         my_tai = tAI.from_named_reference('lowelab')
         print("Using E. coli tRNA counts from lowelab/GtRNAdb", file=sys.stderr)
 
-    print([my_tai.calc(str(r.seq)) for r in seq_records])
+    for r in seq_records:
+        print(my_tai.calc(str(r.seq)))
 
     return
 
